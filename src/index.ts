@@ -22,8 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
   game2.createScene();
 
   // Add Objects
-  let object1 = new Shark(game.renderScene.renderCanvas.engine, game.renderScene.scene, game.world.waterMaterial);
-  let object2 = new Shark(game2.renderScene.renderCanvas.engine, game2.renderScene.scene, game2.world.waterMaterial);
+  let object1 = new Shark(game.renderScene, game.world.waterMaterial);
+  let object2 = new Shark(game2.renderScene, game2.world.waterMaterial);
 
   // Gui
   let gui = new Gui(object1, game.renderScene);
@@ -56,8 +56,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
   // Add Objects
-  let object3 = new Shark(scene3.renderCanvas.engine, scene3.scene, world3.waterMaterial);
-  let object4 = new Shark(scene4.renderCanvas.engine, scene4.scene, world4.waterMaterial);
+  let object3 = new Shark(scene3, world3.waterMaterial);
+  let object4 = new Shark(scene4, world4.waterMaterial);
 
   // Gui
   let gui3 = new Gui(object3, scene3);

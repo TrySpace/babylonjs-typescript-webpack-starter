@@ -1,6 +1,6 @@
-import { AbstractMesh, Scene, Engine, WaterMaterial } from "babylonjs";
+import { AbstractMesh, Engine, WaterMaterial } from "babylonjs";
 import { GameUtils } from "./game-utils";
-
+import { Scene } from './scene';
 
 export class Shark {
 
@@ -10,19 +10,19 @@ export class Shark {
   public _firstVertex: any;
   public _waterMaterial: WaterMaterial;
 
-  constructor (engine: Engine, scene: Scene, waterMaterial: WaterMaterial) {
-    scene.registerBeforeRender(() => {
-        let deltaTime: number = (1 / engine.getFps());
+  constructor (renderScene: Scene,waterMaterial: WaterMaterial) {
+    renderScene.scene.registerBeforeRender(() => {
+        let deltaTime: number = (1 / renderScene.renderCanvas.engine.getFps());
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
         this.animateShark(deltaTime);
     });
     this._waterMaterial = waterMaterial;
-    this.createShark(scene);
+    this.createShark(renderScene);
   }
 
-  createShark (scene: Scene) {
+  createShark (renderScene: Scene) {
     // create a shark mesh from an obj file
-    GameUtils.createShark(scene)
+    GameUtils.createShark(renderScene.scene)
         .subscribe(sharkMesh => {
             this._sharkMesh = sharkMesh;
             this._sharkMesh.getChildren().forEach(
