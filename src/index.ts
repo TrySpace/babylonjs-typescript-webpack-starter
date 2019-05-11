@@ -3,7 +3,7 @@ import 'babylonjs-materials';
 import 'babylonjs-loaders';
 import CANNON = require('cannon');
 import { RenderCanvas } from './RenderCanvas';
-import { Scene } from './scene';
+import { RenderScene } from './RenderScene';
 import { Camera } from './camera';
 import { World } from './world';
 import { RenderLoop } from './RenderLoop';
@@ -44,30 +44,30 @@ window.addEventListener('DOMContentLoaded', () => {
   let renderCanvas3 = new RenderCanvas('renderCanvas3');
   let renderCanvas4 = new RenderCanvas('renderCanvas4');
 
-  let scene3 = new Scene(renderCanvas3);
-  let scene4 = new Scene(renderCanvas4);
+  let renderScene3 = new RenderScene(renderCanvas3);
+  let renderScene4 = new RenderScene(renderCanvas4);
 
-  let camera3 = new Camera(scene3, 3);
-  let camera4 = new Camera(scene4, 3);
+  let camera3 = new Camera(renderScene3, 3);
+  let camera4 = new Camera(renderScene4, 3);
 
   // Fill world
-  let world3 = new World(scene3, true, false);
-  let world4 = new World(scene4, false, true);
+  let world3 = new World(renderScene3, true, false);
+  let world4 = new World(renderScene4, false, true);
 
 
   // Add Objects
-  let object3 = new Shark(scene3, world3.waterMaterial);
-  let object4 = new Shark(scene4, world4.waterMaterial);
+  let object3 = new Shark(renderScene3, world3.waterMaterial);
+  let object4 = new Shark(renderScene4, world4.waterMaterial);
 
   // Gui
-  let gui3 = new Gui(object3, scene3);
-  let gui4 = new Gui(object4, scene4);
+  let gui3 = new Gui(object3, renderScene3);
+  let gui4 = new Gui(object4, renderScene4);
 
   // Render bottom
-  let renderLoop3 = new RenderLoop(scene3, () => {
+  let renderLoop3 = new RenderLoop(renderScene3, () => {
     gui3.updateCoordinateTexture(object3.firstVertex);
   });
-  let renderLoop4 = new RenderLoop(scene4, () => {
+  let renderLoop4 = new RenderLoop(renderScene4, () => {
     gui4.updateCoordinateTexture(object4.firstVertex);
   });
 

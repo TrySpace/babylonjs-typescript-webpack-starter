@@ -1,7 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import { RenderCanvas } from './RenderCanvas';
 
-export class Scene {
+export class RenderScene {
 
   public scene: BABYLON.Scene;
   public renderCanvas: RenderCanvas;
