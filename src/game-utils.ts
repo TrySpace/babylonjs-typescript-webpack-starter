@@ -30,7 +30,7 @@ export class GameUtils {
         let waterMesh = BABYLON.Mesh.CreateGround("waterMesh", 512, 512, 32, scene, false);
         let waterMaterial = GameUtils.createWaterMaterial("water", "./assets/texture/waterbump.png", scene);
         waterMesh.material = waterMaterial;
-        waterMesh.position.y = 4;
+        waterMesh.position.y = 2;
 
         return waterMaterial;
     }
@@ -38,15 +38,15 @@ export class GameUtils {
     /**
      * Creates a Gui Texture
      */
-    public static createGUI() {
-        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    public static createGUI(scene) {
+        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"+Math.random(), true, scene.scene);
     }
 
     /**
      * Creates a Button that tells the Shark to swim or not
-     * @param guiTexture 
-     * @param btnText 
-     * @param btnClicked 
+     * @param guiTexture
+     * @param btnText
+     * @param btnClicked
      */
     public static createButtonSwim(guiTexture: GUI.AdvancedDynamicTexture, btnText: string, btnClicked: (button: GUI.Button) => void) {
 
@@ -74,13 +74,13 @@ export class GameUtils {
             new BABYLON.Vector3(position.x, 0, position.y),
             new BABYLON.Vector3(position.x, 100, position.y),
         ];
-        //Create lines 
-        var lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints}, scene); 
+        //Create lines
+        var lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints}, scene);
     }
- 
+
     /**
-     * 
-     * @param guiTexture 
+     *
+     * @param guiTexture
      */
     public static createCoordinatesText(guiTexture: GUI.AdvancedDynamicTexture): { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } {
         let txtX = new GUI.TextBlock();
@@ -106,7 +106,7 @@ export class GameUtils {
         txtY.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         txtY.left = 20;
         txtY.top = 90;
-        
+
         let txtZ = new GUI.TextBlock();
         txtZ.height = "20px";
         txtZ.width = "500px";
@@ -118,7 +118,7 @@ export class GameUtils {
         txtZ.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
         txtZ.left = 20;
         txtZ.top = 120;
-        
+
         guiTexture.addControl(txtX);
         guiTexture.addControl(txtY);
         guiTexture.addControl(txtZ);
@@ -203,6 +203,7 @@ export class GameUtils {
         skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
         skyboxMaterial.disableLighting = true;
         skybox.material = skyboxMaterial;
+        return skybox;
     }
 
     /**
@@ -228,7 +229,7 @@ export class GameUtils {
         let water = new BABYLON.WaterMaterial(name, scene);
         water.bumpTexture = new BABYLON.Texture(noiseFile, scene);
         // Water properties
-        water.windForce = -15;
+        water.windForce = -5;
         water.waveHeight = 0;
         water.windDirection = new BABYLON.Vector2(1, 1);
         water.waterColor = new BABYLON.Color3(0.25, 0.88, 0.82);
