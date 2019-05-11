@@ -17,16 +17,15 @@ export class DebugToggle {
     this._guiTexture = GameUtils.createGUI(sceneInstance);
 
     // Button to start shark animation
-    GameUtils.createButtonSwim(this._guiTexture, "Start Swimming",
+    GameUtils.createButtonSwim(this._guiTexture, "On",
         (btn) => {
             let textControl = btn.children[0] as GUI.TextBlock;
             boolAction();
             if (this.bool.getValue()) {
-                textControl.text = "Stop Swimming";
+                textControl.text = "Off";
             }
             else {
-                // this._shark.sharkAnimationTime = 0;
-                textControl.text = "Start Swimming";
+                textControl.text = "On";
             }
         });
 

@@ -28,6 +28,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // Gui
   let gui = new DebugToggle(game.sceneInstance, object1.swimming, () => {
     object1.swimming.next(!object1.swimming.getValue());
+    if (!object1.swimming.getValue()) {
+      object1.sharkAnimationTime = 0;
+    }
   });
   let gui2 = new DebugToggle(game2.sceneInstance, object2.swimming, () => {
     object2.swimming.next(!object2.swimming.getValue());
