@@ -1,5 +1,5 @@
 import { GameUtils } from './game-utils';
-import { Shark } from './shark';
+import { Shark } from './Shark';
 import * as GUI from 'babylonjs-gui';
 import { SceneInstance } from './SceneInstance';
 

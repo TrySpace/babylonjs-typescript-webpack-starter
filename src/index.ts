@@ -1,13 +1,13 @@
-import { Game } from './game';
 import 'babylonjs-materials';
 import 'babylonjs-loaders';
 import CANNON = require('cannon');
 import { RenderCanvas } from './RenderCanvas';
 import { SceneInstance } from './SceneInstance';
-import { Camera } from './camera';
+import { Camera } from './Camera';
+import { Game } from './Game';
 import { World } from './World';
 import { RenderLoop } from './RenderLoop';
-import { Shark } from './shark';
+import { Shark } from './Shark';
 import { Gui } from './gui';
 
 window.addEventListener('DOMContentLoaded', () => {
