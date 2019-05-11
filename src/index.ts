@@ -32,10 +32,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Render top
   let renderLoop1 = new RenderLoop(game.renderScene, () => {
-    gui.updateCoordinateTexture(object1._firstVertex);
+    gui.updateCoordinateTexture(object1.firstVertex);
   });
   let renderLoop2 = new RenderLoop(game2.renderScene, () => {
-    gui2.updateCoordinateTexture(object2._firstVertex);
+    gui2.updateCoordinateTexture(object2.firstVertex);
   });
 
 
@@ -65,10 +65,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Render bottom
   let renderLoop3 = new RenderLoop(scene3, () => {
-    gui3.updateCoordinateTexture(object3._firstVertex);
+    gui3.updateCoordinateTexture(object3.firstVertex);
   });
   let renderLoop4 = new RenderLoop(scene4, () => {
-    gui4.updateCoordinateTexture(object4._firstVertex);
+    gui4.updateCoordinateTexture(object4.firstVertex);
   });
 
 

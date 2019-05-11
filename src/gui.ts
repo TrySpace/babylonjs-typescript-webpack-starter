@@ -7,31 +7,30 @@ export class Gui {
 
   private _shark: Shark;
   private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
-
-  public guiTexture: GUI.AdvancedDynamicTexture;
+  private _guiTexture: GUI.AdvancedDynamicTexture;
 
   constructor (shark: Shark, scene: Scene) {
     this._shark = shark;
 
     // create new gui
-    this.guiTexture = GameUtils.createGUI(scene);
+    this._guiTexture = GameUtils.createGUI(scene);
 
     // Button to start shark animation
-    GameUtils.createButtonSwim(this.guiTexture, "Start Swimming",
+    GameUtils.createButtonSwim(this._guiTexture, "Start Swimming",
         (btn) => {
             let textControl = btn.children[0] as GUI.TextBlock;
-            this._shark._swim = !this._shark._swim;
-            if (this._shark._swim) {
+            this._shark.swimming = !this._shark.swimming;
+            if (this._shark.swimming) {
                 textControl.text = "Stop Swimming";
             }
             else {
-                this._shark._sharkAnimationTime = 0;
+                this._shark.sharkAnimationTime = 0;
                 textControl.text = "Start Swimming";
             }
         });
 
       // Debug Text for Shark coordinates
-    this._txtCoordinates = GameUtils.createCoordinatesText(this.guiTexture);
+    this._txtCoordinates = GameUtils.createCoordinatesText(this._guiTexture);
   }
 
   /**

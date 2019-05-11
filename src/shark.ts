@@ -4,13 +4,14 @@ import { Scene } from './scene';
 
 export class Shark {
 
-  public _sharkMesh: AbstractMesh;
-  public _swim: boolean = false;
-  public _sharkAnimationTime = 0;
-  public _firstVertex: any;
-  public _waterMaterial: WaterMaterial;
+  private _sharkMesh: AbstractMesh;
+  private _waterMaterial: WaterMaterial;
 
-  constructor (renderScene: Scene,waterMaterial: WaterMaterial) {
+  public swimming: boolean = false;
+  public sharkAnimationTime = 0;
+  public firstVertex: any;
+
+  constructor (renderScene: Scene, waterMaterial: WaterMaterial) {
     renderScene.scene.registerBeforeRender(() => {
         let deltaTime: number = (1 / renderScene.renderCanvas.engine.getFps());
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
@@ -34,8 +35,8 @@ export class Shark {
   }
 
   animateShark(deltaTime: number): void {
-      if (this._sharkMesh && this._swim) {
-          this._sharkAnimationTime += 0.01;
+      if (this._sharkMesh && this.swimming) {
+          this.sharkAnimationTime += 0.01;
           this._sharkMesh.getChildren().forEach(
               mesh => {
                   let realMesh = <BABYLON.Mesh> mesh;
@@ -44,7 +45,7 @@ export class Shark {
                   let numberOfPoints = positions.length / 3;
                   for (let i = 0; i < numberOfPoints; i++) {
                       let vertex = new BABYLON.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
-                      vertex.x += (Math.sin(0.15 * vertex.z + this._sharkAnimationTime * 4 - 1.6) * 0.05);
+                      vertex.x += (Math.sin(0.15 * vertex.z + this.sharkAnimationTime * 4 - 1.6) * 0.05);
                       positions[i * 3] = vertex.x;
 
                   }
@@ -64,7 +65,7 @@ export class Shark {
       let firstMesh = (mesh.getChildren()[0] as BABYLON.Mesh)
       let vertexData = BABYLON.VertexData.ExtractFromMesh(firstMesh);
       let positions = vertexData.positions;
-      this._firstVertex = new BABYLON.Vector3(positions[0], positions[1], positions[3]);
+      this.firstVertex = new BABYLON.Vector3(positions[0], positions[1], positions[3]);
   }
 
 }
