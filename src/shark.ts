@@ -11,19 +11,19 @@ export class Shark {
   public sharkAnimationTime = 0;
   public firstVertex: any;
 
-  constructor (renderScene: Scene, waterMaterial: WaterMaterial) {
-    renderScene.scene.registerBeforeRender(() => {
-        let deltaTime: number = (1 / renderScene.renderCanvas.engine.getFps());
+  constructor (sceneInstance: Scene, waterMaterial: WaterMaterial) {
+    sceneInstance.scene.registerBeforeRender(() => {
+        let deltaTime: number = (1 / sceneInstance.renderCanvas.engine.getFps());
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
         this.animateShark(deltaTime);
     });
     this._waterMaterial = waterMaterial;
-    this.createShark(renderScene);
+    this.createShark(sceneInstance);
   }
 
-  createShark (renderScene: Scene) {
+  createShark (sceneInstance: Scene) {
     // create a shark mesh from an obj file
-    GameUtils.createShark(renderScene.scene)
+    GameUtils.createShark(sceneInstance.scene)
         .subscribe(sharkMesh => {
             this._sharkMesh = sharkMesh;
             this._sharkMesh.getChildren().forEach(

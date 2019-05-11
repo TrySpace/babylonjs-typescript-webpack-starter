@@ -1,29 +1,29 @@
 import * as BABYLON from 'babylonjs';
 import { GameUtils } from './game-utils';
-import { RenderScene } from './RenderScene';
+import { SceneInstance } from './SceneInstance';
 import { WaterMaterial } from 'babylonjs';
 
 export class World {
   private _light: BABYLON.Light;
 
-  public renderScene: RenderScene;
+  public sceneInstance: SceneInstance;
   public waterMaterial: WaterMaterial;
 
 
-  constructor(renderScene: RenderScene, groundOrNot: boolean, sky: boolean) {
-      this.renderScene = renderScene;
+  constructor(sceneInstance: SceneInstance, groundOrNot: boolean, sky: boolean) {
+      this.sceneInstance = sceneInstance;
 
       // create a basic light, aiming 0,1,0 - meaning, to the sky
-      this._light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), this.renderScene.scene);
+      this._light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), this.sceneInstance.scene);
 
       // creates the sandy ground
-      let ground = GameUtils.createGround(this.renderScene.scene);
+      let ground = GameUtils.createGround(this.sceneInstance.scene);
       // creates the watermaterial and adds the relevant nodes to the renderlist
-      this.waterMaterial = GameUtils.createWater(this.renderScene.scene);
+      this.waterMaterial = GameUtils.createWater(this.sceneInstance.scene);
 
       // create the skybox
       if (sky) {
-        let skybox = GameUtils.createSkybox("skybox", "./assets/texture/skybox/TropicalSunnyDay", this.renderScene.scene);
+        let skybox = GameUtils.createSkybox("skybox", "./assets/texture/skybox/TropicalSunnyDay", this.sceneInstance.scene);
         this.waterMaterial.addToRenderList(skybox);
       }
 
@@ -33,7 +33,7 @@ export class World {
 
       // Physics engine also works
       let gravity = new BABYLON.Vector3(0, -0.9, 0);
-      this.renderScene.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
+      this.sceneInstance.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
 
   }
 

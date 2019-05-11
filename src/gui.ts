@@ -1,7 +1,7 @@
 import { GameUtils } from './game-utils';
 import { Shark } from './shark';
 import * as GUI from 'babylonjs-gui';
-import { RenderScene } from './RenderScene';
+import { SceneInstance } from './SceneInstance';
 
 export class Gui {
 
@@ -9,11 +9,11 @@ export class Gui {
   private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
   private _guiTexture: GUI.AdvancedDynamicTexture;
 
-  constructor (shark: Shark, renderScene: RenderScene) {
+  constructor (shark: Shark, sceneInstance: SceneInstance) {
     this._shark = shark;
 
     // create new gui
-    this._guiTexture = GameUtils.createGUI(renderScene);
+    this._guiTexture = GameUtils.createGUI(sceneInstance);
 
     // Button to start shark animation
     GameUtils.createButtonSwim(this._guiTexture, "Start Swimming",
