@@ -1,7 +1,7 @@
 import { RenderCanvas } from './RenderCanvas';
 import { SceneInstance } from './SceneInstance';
 import { Camera } from './camera';
-import { World } from './world';
+import { World } from './World';
 
 export class Game {
 

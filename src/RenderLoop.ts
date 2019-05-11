@@ -1,11 +1,11 @@
-import { Scene } from './scene';
+import { SceneInstance } from './SceneInstance';
 
 export class RenderLoop {
 
-  public sceneInstance: Scene;
+  public sceneInstance: SceneInstance;
   public renderCallback: () => any;
 
-  constructor(sceneInstance: Scene, renderCallback?: () => any) {
+  constructor(sceneInstance: SceneInstance, renderCallback?: () => any) {
     this.sceneInstance = sceneInstance;
     this.renderCallback = renderCallback;
     this.animate();

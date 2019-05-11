@@ -5,7 +5,7 @@ import CANNON = require('cannon');
 import { RenderCanvas } from './RenderCanvas';
 import { SceneInstance } from './SceneInstance';
 import { Camera } from './camera';
-import { World } from './world';
+import { World } from './World';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './shark';
 import { Gui } from './gui';
