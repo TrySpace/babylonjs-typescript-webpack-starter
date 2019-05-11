@@ -7,7 +7,7 @@ export class Game {
 
     private renderCanvas: RenderCanvas;
     private camera: Camera;
-    
+
     public renderScene: Scene;
     public world: World;
 
@@ -21,13 +21,8 @@ export class Game {
      */
     createScene(): void {
         this.renderScene = new Scene(this.renderCanvas);
-
         this.camera = new Camera(this.renderScene, 1);
-
         this.world = new World(this.renderScene, true, true);
-
     }
-
-
 
 }

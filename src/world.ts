@@ -1,16 +1,10 @@
 import * as BABYLON from 'babylonjs';
-import * as GUI from 'babylonjs-gui';
 import { GameUtils } from './game-utils';
 import { Scene } from './scene';
-import { Shark } from './shark';
-import { Gui } from './gui';
 import { WaterMaterial } from 'babylonjs';
 
 export class World {
   private _light: BABYLON.Light;
-  private _shark: any;
-
-  private gui: Gui;
 
   public sceneInstance: Scene;
   public waterMaterial: WaterMaterial;
