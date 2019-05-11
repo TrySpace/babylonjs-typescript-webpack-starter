@@ -8,7 +8,7 @@ import { Game } from './Game';
 import { World } from './World';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './Shark';
-import { Gui } from './gui';
+import { DebugToggle } from './DebugToggle';
 
 window.addEventListener('DOMContentLoaded', () => {
   // Set global variable for cannonjs physics engine
@@ -26,8 +26,12 @@ window.addEventListener('DOMContentLoaded', () => {
   let object2 = new Shark(game2.sceneInstance, game2.world.waterMaterial);
 
   // Gui
-  let gui = new Gui(object1, game.sceneInstance);
-  let gui2 = new Gui(object2, game2.sceneInstance);
+  let gui = new DebugToggle(game.sceneInstance, object1.swimming, () => {
+    object1.swimming = !object1.swimming;
+  });
+  let gui2 = new DebugToggle(game2.sceneInstance, object2.swimming, () => {
+    object2.swimming = !object2.swimming;
+  });
 
 
   // Render top
@@ -60,8 +64,12 @@ window.addEventListener('DOMContentLoaded', () => {
   let object4 = new Shark(renderScene4, world4.waterMaterial);
 
   // Gui
-  let gui3 = new Gui(object3, renderScene3);
-  let gui4 = new Gui(object4, renderScene4);
+  let gui3 = new DebugToggle(renderScene3, object3.swimming, () => {
+    object3.swimming = !object3.swimming;
+  });
+  let gui4 = new DebugToggle(renderScene4, object4.swimming, () => {
+    object4.swimming = !object4.swimming;
+  });
 
   // Render bottom
   let renderLoop3 = new RenderLoop(renderScene3, () => {
