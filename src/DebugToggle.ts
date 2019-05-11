@@ -1,17 +1,16 @@
 import { GameUtils } from './game-utils';
-import { Shark } from './Shark';
 import * as GUI from 'babylonjs-gui';
 import { SceneInstance } from './SceneInstance';
+import { BehaviorSubject } from 'rxjs';
 
 export class DebugToggle {
 
   // private _shark: Shark;
   private _txtCoordinates: { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } = null;
   private _guiTexture: GUI.AdvancedDynamicTexture;
-  private bool: boolean;
+  private bool: BehaviorSubject<boolean>;
 
-  constructor (sceneInstance: SceneInstance, bool: boolean, boolAction: () => void) {
-    // this._shark = shark;
+  constructor (sceneInstance: SceneInstance, bool: BehaviorSubject<boolean>, boolAction: () => void) {
     this.bool = bool;
 
     // create new gui
@@ -21,9 +20,8 @@ export class DebugToggle {
     GameUtils.createButtonSwim(this._guiTexture, "Start Swimming",
         (btn) => {
             let textControl = btn.children[0] as GUI.TextBlock;
-            // this._shark.swimming = !this._shark.swimming;
             boolAction();
-            if (this.bool) {
+            if (this.bool.getValue()) {
                 textControl.text = "Stop Swimming";
             }
             else {

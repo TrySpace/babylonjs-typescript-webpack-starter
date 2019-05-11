@@ -27,10 +27,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Gui
   let gui = new DebugToggle(game.sceneInstance, object1.swimming, () => {
-    object1.swimming = !object1.swimming;
+    object1.swimming.next(!object1.swimming.getValue());
   });
   let gui2 = new DebugToggle(game2.sceneInstance, object2.swimming, () => {
-    object2.swimming = !object2.swimming;
+    object2.swimming.next(!object2.swimming.getValue());
   });
 
 
@@ -65,10 +65,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Gui
   let gui3 = new DebugToggle(renderScene3, object3.swimming, () => {
-    object3.swimming = !object3.swimming;
+    object3.swimming.next(!object3.swimming.getValue());
   });
   let gui4 = new DebugToggle(renderScene4, object4.swimming, () => {
-    object4.swimming = !object4.swimming;
+    object4.swimming.next(!object4.swimming.getValue());
   });
 
   // Render bottom

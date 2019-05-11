@@ -1,17 +1,19 @@
 import { AbstractMesh, Engine, WaterMaterial } from "babylonjs";
 import { GameUtils } from "./game-utils";
 import { SceneInstance } from './SceneInstance';
+import { BehaviorSubject } from 'rxjs';
 
 export class Shark {
 
   private _sharkMesh: AbstractMesh;
   private _waterMaterial: WaterMaterial;
 
-  public swimming: boolean = false;
+  public swimming: BehaviorSubject<boolean>;
   public sharkAnimationTime = 0;
   public firstVertex: any;
 
   constructor (sceneInstance: SceneInstance, waterMaterial: WaterMaterial) {
+    this.swimming = new BehaviorSubject(false);
     sceneInstance.scene.registerBeforeRender(() => {
         let deltaTime: number = (1 / sceneInstance.renderCanvas.engine.getFps());
         this.debugFirstMeshCoordinate(this._sharkMesh as BABYLON.Mesh);
@@ -35,7 +37,8 @@ export class Shark {
   }
 
   animateShark(deltaTime: number): void {
-      if (this._sharkMesh && this.swimming) {
+    // console.log(this.swimming.getValue());
+      if (this._sharkMesh && this.swimming.getValue()) {
           this.sharkAnimationTime += 0.01;
           this._sharkMesh.getChildren().forEach(
               mesh => {
