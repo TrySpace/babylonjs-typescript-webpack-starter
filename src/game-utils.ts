@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
-interface GroundSize {
+interface HWSize {
   height: number;
   width: number;
 }
@@ -16,14 +16,14 @@ interface GroundSize {
  */
 export class DefaultGround {
 
-  private groundMaterial: BABYLON.StandardMaterial;
+  private material: BABYLON.StandardMaterial;
   public mesh: BABYLON.Mesh;
 
-  constructor (scene: BABYLON.Scene, size: GroundSize) {
+  constructor (scene: BABYLON.Scene, size: HWSize) {
     // Material
-    this.groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
-    this.groundMaterial.diffuseTexture = new BABYLON.Texture("./assets/texture/ground.jpg", scene);
-    //groundMaterial.diffuseTexture.uScale = groundMaterial.diffuseTexture.vScale = 4;
+    this.material = new BABYLON.StandardMaterial("defaultGround", scene);
+    this.material.diffuseTexture = new BABYLON.Texture("./assets/texture/ground.jpg", scene);
+    //material.diffuseTexture.uScale = material.diffuseTexture.vScale = 4;
 
     // Mesh
     this.mesh = BABYLON.MeshBuilder.CreateGround("ground", {
@@ -34,25 +34,40 @@ export class DefaultGround {
     }, scene);
 
     this.mesh.position.y = -1;
-    this.mesh.material = this.groundMaterial;
+    this.mesh.material = this.material;
+  }
+}
+
+
+/**
+ * Creates a watermaterial
+ * @param scene
+ * @param size
+ */
+export class DefaultWater {
+
+  private mesh: BABYLON.Mesh;
+  public material: BABYLON.WaterMaterial;
+
+  constructor (scene: BABYLON.Scene, size: HWSize) {
+
+    // Material
+    this.material = GameUtils.createWaterMaterial("water", "./assets/texture/waterbump.png", scene);
+
+    // Mesh
+    this.mesh = BABYLON.MeshBuilder.CreateGround("defaultWater", {
+      width: size.width,
+      height: size.height,
+      subdivisions: 32,
+      updatable: false,
+    }, scene);
+
+    this.mesh.material = this.material;
+    this.mesh.position.y = 2;
   }
 }
 
 export class GameUtils {
-
-    /**
-     * Creates a second ground and adds a watermaterial to it
-     * @param scene
-     */
-    public static createWater(scene: BABYLON.Scene): BABYLON.WaterMaterial {
-        // Water
-        let waterMesh = BABYLON.Mesh.CreateGround("waterMesh", 512, 512, 32, scene, false);
-        let waterMaterial = GameUtils.createWaterMaterial("water", "./assets/texture/waterbump.png", scene);
-        waterMesh.material = waterMaterial;
-        waterMesh.position.y = 2;
-
-        return waterMaterial;
-    }
 
     /**
      * Creates a Gui Texture

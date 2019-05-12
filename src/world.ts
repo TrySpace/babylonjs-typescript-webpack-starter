@@ -1,13 +1,12 @@
 import * as BABYLON from 'babylonjs';
-import { GameUtils, DefaultGround } from './game-utils';
+import { GameUtils, DefaultGround, DefaultWater } from './game-utils';
 import { SceneInstance } from './SceneInstance';
-import { WaterMaterial } from 'babylonjs';
 
 export class World {
   private _light: BABYLON.Light;
 
   public sceneInstance: SceneInstance;
-  public waterMaterial: WaterMaterial;
+  public waterMaterial: DefaultWater;
 
 
   constructor(sceneInstance: SceneInstance, groundOrNot: boolean, sky: boolean) {
@@ -18,21 +17,24 @@ export class World {
 
       // creates the sandy ground
       let ground = new DefaultGround(this.sceneInstance.scene, {
+        height: 16,
+        width: 32
+      });
+
+      // creates the watermaterial and adds the relevant nodes to the renderlist
+      this.waterMaterial = new DefaultWater(this.sceneInstance.scene, {
         height: 32,
         width: 16
       });
 
-      // creates the watermaterial and adds the relevant nodes to the renderlist
-      this.waterMaterial = GameUtils.createWater(this.sceneInstance.scene);
-
       // create the skybox
       if (sky) {
         let skybox = GameUtils.createSkybox("skybox", "./assets/texture/skybox/TropicalSunnyDay", this.sceneInstance.scene);
-        this.waterMaterial.addToRenderList(skybox);
+        this.waterMaterial.material.addToRenderList(skybox);
       }
 
       if (groundOrNot) {
-        this.waterMaterial.addToRenderList(ground.mesh)
+        this.waterMaterial.material.addToRenderList(ground.mesh)
       }
 
       // Physics engine also works
