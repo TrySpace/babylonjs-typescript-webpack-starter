@@ -82,33 +82,44 @@ export class GUITexture {
 }
 
 
+/**
+ * Creates a Button that tells the Shark to swim or not
+ * @param guiTexture
+ * @param btnText
+ * @function btnClicked
+ */
+export class OnOffButton {
+
+  private button: GUI.Button;
+
+  constructor(guiTexture: GUI.AdvancedDynamicTexture, btnText: string) {
+
+    this.button = GUI.Button.CreateSimpleButton("OnOffButton", btnText);
+    this.button.width = "150px";
+    this.button.height = "40px";
+    this.button.color = "white";
+    this.button.background = "grey";
+    this.button.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    this.button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
+    this.button.left = 12;
+    this.button.top = 12;
+
+    guiTexture.addControl(this.button);
+  }
+
+  public onPointerUp (btnClicked: (button: GUI.Button)  => void) {
+    this.button.onPointerUpObservable.add(() => {
+        if (btnClicked) {
+            btnClicked(this.button);
+        }
+    });
+  }
+}
+
+
 export class GameUtils {
 
-    /**
-     * Creates a Button that tells the Shark to swim or not
-     * @param guiTexture
-     * @param btnText
-     * @param btnClicked
-     */
-    public static createButtonSwim(guiTexture: GUI.AdvancedDynamicTexture, btnText: string, btnClicked: (button: GUI.Button) => void) {
 
-        let btnTest = GUI.Button.CreateSimpleButton("but1", btnText);
-        btnTest.width = "150px";
-        btnTest.height = "40px";
-        btnTest.color = "white";
-        btnTest.background = "grey";
-        btnTest.onPointerUpObservable.add(() => {
-            if (btnClicked) {
-                btnClicked(btnTest);
-            }
-        });
-        btnTest.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        btnTest.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        btnTest.left = 12;
-        btnTest.top = 12;
-
-        guiTexture.addControl(btnTest);
-    }
 
     public static createVerticalLine(scene: BABYLON.Scene, position: BABYLON.Vector2) {
         //Array of points to construct lines
