@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Bottom
   new classTwo('renderCanvas3');
-  new classTwo('renderCanvas4');
+  new classTwo('renderCanvas4', true, false);
 });
 
 
@@ -47,13 +47,13 @@ class classOne {
 
 
 class classTwo {
-  constructor (canvasId) {
+  constructor (canvasId, groundTransparent = true, sky = true) {
     let renderCanvas = new RenderCanvas(canvasId);
     let renderScene = new SceneInstance(renderCanvas);
     new Camera(renderScene, 3);
 
     // Fill world
-    let world = new World(renderScene, true, false);
+    let world = new World(renderScene, groundTransparent, sky);
 
     // Add Objects
     let object = new Shark(renderScene, world.waterMaterial.material);

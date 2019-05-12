@@ -2,6 +2,7 @@ import * as BABYLON from 'babylonjs';
 import * as GUI from 'babylonjs-gui';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AdvancedDynamicTexture } from 'babylonjs-gui';
 
 
 interface HWSize {
@@ -67,14 +68,21 @@ export class DefaultWater {
   }
 }
 
-export class GameUtils {
 
-    /**
-     * Creates a Gui Texture
-     */
-    public static createGUI(scene) {
-        return GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"+Math.random(), true, scene.scene);
-    }
+/**
+ * Creates a GUI Texture
+ * @param scene
+ */
+export class GUITexture {
+  public texture: AdvancedDynamicTexture;
+
+  constructor (scene: BABYLON.Scene) {
+    this.texture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI"+Math.random(), true, scene);
+  }
+}
+
+
+export class GameUtils {
 
     /**
      * Creates a Button that tells the Shark to swim or not

@@ -9,7 +9,7 @@ export class World {
   public waterMaterial: DefaultWater;
 
 
-  constructor(sceneInstance: SceneInstance, groundOrNot: boolean, sky: boolean) {
+  constructor(sceneInstance: SceneInstance, groundTransparent: boolean, sky: boolean) {
       this.sceneInstance = sceneInstance;
 
       // create a basic light, aiming 0,1,0 - meaning, to the sky
@@ -33,7 +33,7 @@ export class World {
         this.waterMaterial.material.addToRenderList(skybox);
       }
 
-      if (groundOrNot) {
+      if (groundTransparent) {
         this.waterMaterial.material.addToRenderList(ground.mesh)
       }
 
