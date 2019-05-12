@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import { GameUtils } from './game-utils';
+import { GameUtils, DefaultGround } from './game-utils';
 import { SceneInstance } from './SceneInstance';
 import { WaterMaterial } from 'babylonjs';
 
@@ -17,7 +17,11 @@ export class World {
       this._light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(0, 1, 0), this.sceneInstance.scene);
 
       // creates the sandy ground
-      let ground = GameUtils.createGround(this.sceneInstance.scene);
+      let ground = new DefaultGround(this.sceneInstance.scene, {
+        height: 32,
+        width: 16
+      });
+
       // creates the watermaterial and adds the relevant nodes to the renderlist
       this.waterMaterial = GameUtils.createWater(this.sceneInstance.scene);
 
@@ -28,8 +32,8 @@ export class World {
       }
 
       if (groundOrNot) {
-        this.waterMaterial.addToRenderList(ground)
-     }
+        this.waterMaterial.addToRenderList(ground.mesh)
+      }
 
       // Physics engine also works
       let gravity = new BABYLON.Vector3(0, -0.9, 0);

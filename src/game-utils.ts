@@ -3,23 +3,42 @@ import * as GUI from 'babylonjs-gui';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
+interface GroundSize {
+  height: number;
+  width: number;
+}
+
+/**
+ * Creates a basic ground
+ * @param scene
+ * @param size
+ */
+export class DefaultGround {
+
+  private groundMaterial: BABYLON.StandardMaterial;
+  public mesh: BABYLON.Mesh;
+
+  constructor (scene: BABYLON.Scene, size: GroundSize) {
+    // Material
+    this.groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+    this.groundMaterial.diffuseTexture = new BABYLON.Texture("./assets/texture/ground.jpg", scene);
+    //groundMaterial.diffuseTexture.uScale = groundMaterial.diffuseTexture.vScale = 4;
+
+    // Mesh
+    this.mesh = BABYLON.MeshBuilder.CreateGround("ground", {
+      width: size.width,
+      height: size.height,
+      subdivisions: 32,
+      updatable: false
+    }, scene);
+
+    this.mesh.position.y = -1;
+    this.mesh.material = this.groundMaterial;
+  }
+}
+
 export class GameUtils {
-
-    /**
-     * Creates a basic ground
-     * @param scene
-     */
-    public static createGround(scene: BABYLON.Scene): BABYLON.Mesh {
-        // Ground
-        let groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
-        groundMaterial.diffuseTexture = new BABYLON.Texture("./assets/texture/ground.jpg", scene);
-        //groundMaterial.diffuseTexture.uScale = groundMaterial.diffuseTexture.vScale = 4;
-        let ground = BABYLON.Mesh.CreateGround("ground", 512, 512, 32, scene, false);
-        ground.position.y = -1;
-        ground.material = groundMaterial;
-
-        return ground;
-    }
 
     /**
      * Creates a second ground and adds a watermaterial to it

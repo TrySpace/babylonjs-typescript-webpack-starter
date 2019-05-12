@@ -15,72 +15,57 @@ window.addEventListener('DOMContentLoaded', () => {
   window.CANNON = CANNON;
 
   // Top
-  let game = new Game('renderCanvas');
-  game.createScene();
-
-  let game2 = new Game('renderCanvas2');
-  game2.createScene();
-
-  // Add Objects
-  let object1 = new Shark(game.sceneInstance, game.world.waterMaterial);
-  let object2 = new Shark(game2.sceneInstance, game2.world.waterMaterial);
-
-  // Gui
-  let gui = new DebugToggle(game.sceneInstance, object1.swimming, () => {
-    object1.swimming.next(!object1.swimming.getValue());
-    if (!object1.swimming.getValue()) {
-      object1.sharkAnimationTime = 0;
-    }
-  });
-  let gui2 = new DebugToggle(game2.sceneInstance, object2.swimming, () => {
-    object2.swimming.next(!object2.swimming.getValue());
-  });
-
-
-  // Render top
-  let renderLoop1 = new RenderLoop(game.sceneInstance, () => {
-    gui.updateCoordinateTexture(object1.firstVertex);
-  });
-  let renderLoop2 = new RenderLoop(game2.sceneInstance, () => {
-    gui2.updateCoordinateTexture(object2.firstVertex);
-  });
-
+  new classOne('renderCanvas');
+  new classOne('renderCanvas2');
 
 
   // Bottom
-  let renderCanvas3 = new RenderCanvas('renderCanvas3');
-  let renderCanvas4 = new RenderCanvas('renderCanvas4');
-
-  let renderScene3 = new SceneInstance(renderCanvas3);
-  let renderScene4 = new SceneInstance(renderCanvas4);
-
-  let camera3 = new Camera(renderScene3, 3);
-  let camera4 = new Camera(renderScene4, 3);
-
-  // Fill world
-  let world3 = new World(renderScene3, true, false);
-  let world4 = new World(renderScene4, false, true);
-
-
-  // Add Objects
-  let object3 = new Shark(renderScene3, world3.waterMaterial);
-  let object4 = new Shark(renderScene4, world4.waterMaterial);
-
-  // Gui
-  let gui3 = new DebugToggle(renderScene3, object3.swimming, () => {
-    object3.swimming.next(!object3.swimming.getValue());
-  });
-  let gui4 = new DebugToggle(renderScene4, object4.swimming, () => {
-    object4.swimming.next(!object4.swimming.getValue());
-  });
-
-  // Render bottom
-  let renderLoop3 = new RenderLoop(renderScene3, () => {
-    gui3.updateCoordinateTexture(object3.firstVertex);
-  });
-  let renderLoop4 = new RenderLoop(renderScene4, () => {
-    gui4.updateCoordinateTexture(object4.firstVertex);
-  });
-
-
+  new classTwo('renderCanvas3');
+  new classTwo('renderCanvas4');
 });
+
+
+class classOne {
+  constructor (canvasId: string) {
+    let game = new Game(canvasId);
+    game.createScene();
+
+    let object = new Shark(game.sceneInstance, game.world.waterMaterial);
+
+    let gui = new DebugToggle(game.sceneInstance, object.swimming, () => {
+      object.swimming.next(!object.swimming.getValue());
+      if (!object.swimming.getValue()) {
+        object.sharkAnimationTime = 0;
+      }
+    });
+
+    new RenderLoop(game.sceneInstance, () => {
+      gui.updateCoordinateTexture(object.firstVertex);
+    });
+  }
+}
+
+
+class classTwo {
+  constructor (canvasId) {
+    let renderCanvas = new RenderCanvas(canvasId);
+    let renderScene = new SceneInstance(renderCanvas);
+    new Camera(renderScene, 3);
+
+    // Fill world
+    let world = new World(renderScene, true, false);
+
+    // Add Objects
+    let object = new Shark(renderScene, world.waterMaterial);
+
+    // Gui
+    let gui = new DebugToggle(renderScene, object.swimming, () => {
+      object.swimming.next(!object.swimming.getValue());
+    });
+
+    // Render bottom
+    new RenderLoop(renderScene, () => {
+      gui.updateCoordinateTexture(object.firstVertex);
+    });
+  }
+}
