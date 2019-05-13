@@ -86,7 +86,7 @@ export class GUITexture {
  * Creates a Button that tells the Shark to swim or not
  * @param guiTexture
  * @param btnText
- * @function btnClicked
+ * @function onPointerUp
  */
 export class OnOffButton {
 
@@ -116,20 +116,28 @@ export class OnOffButton {
   }
 }
 
+/**
+ * Creates a Line
+ * @param scene
+ * @param position
+ */
+export class DrawLine {
+  public lines: BABYLON.LinesMesh;
+
+  constructor (scene: BABYLON.Scene, position: BABYLON.Vector2, length: number, start = 0) {
+    // Array of points to construct lines
+    let points = [
+        new BABYLON.Vector3(position.x, start, position.y),
+        new BABYLON.Vector3(position.x, length, position.y),
+    ];
+    // Create lines
+    this.lines = BABYLON.MeshBuilder.CreateLines("lines", {
+      points
+    }, scene);
+  }
+}
 
 export class GameUtils {
-
-
-
-    public static createVerticalLine(scene: BABYLON.Scene, position: BABYLON.Vector2) {
-        //Array of points to construct lines
-        var myPoints = [
-            new BABYLON.Vector3(position.x, 0, position.y),
-            new BABYLON.Vector3(position.x, 100, position.y),
-        ];
-        //Create lines
-        var lines = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints}, scene);
-    }
 
     /**
      *

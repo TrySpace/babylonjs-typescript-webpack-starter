@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import { GameUtils, DefaultGround, DefaultWater } from './game-utils';
+import { GameUtils, DefaultGround, DefaultWater, DrawLine } from './game-utils';
 import { SceneInstance } from './SceneInstance';
 
 export class World {
@@ -40,6 +40,9 @@ export class World {
       // Physics engine also works
       let gravity = new BABYLON.Vector3(0, -0.9, 0);
       this.sceneInstance.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
+
+      // Line
+      new DrawLine(this.sceneInstance.scene, new BABYLON.Vector2(0, 0), 2, -1);
 
   }
 
