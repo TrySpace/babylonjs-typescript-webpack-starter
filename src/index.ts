@@ -30,7 +30,7 @@ class classOne {
     let game = new Game(canvasId);
     game.createScene();
 
-    let object = new Shark(game.sceneInstance, game.world.waterMaterial.material);
+    let object = new Shark(game.sceneInstance, game.world.waterMaterial.defaultWaterMaterial.material);
 
     let gui = new DebugToggle(game.sceneInstance, object.swimming, () => {
       object.swimming.next(!object.swimming.getValue());
@@ -56,7 +56,7 @@ class classTwo {
     let world = new World(renderScene, groundTransparent, sky);
 
     // Add Objects
-    let object = new Shark(renderScene, world.waterMaterial.material);
+    let object = new Shark(renderScene, world.waterMaterial.defaultWaterMaterial.material);
 
     // Gui
     let gui = new DebugToggle(renderScene, object.swimming, () => {

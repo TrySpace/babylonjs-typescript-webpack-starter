@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import { GameUtils, DefaultGround, DefaultWater, DrawLine } from './game-utils';
+import { GameUtils, DefaultGround, DefaultWater, DrawLine, Skybox } from './game-utils';
 import { SceneInstance } from './SceneInstance';
 
 export class World {
@@ -29,12 +29,12 @@ export class World {
 
       // create the skybox
       if (sky) {
-        let skybox = GameUtils.createSkybox("skybox", "./assets/texture/skybox/TropicalSunnyDay", this.sceneInstance.scene);
-        this.waterMaterial.material.addToRenderList(skybox);
+        const skybox = new Skybox(this.sceneInstance.scene, "skybox", "./assets/texture/skybox/TropicalSunnyDay");
+        this.waterMaterial.defaultWaterMaterial.material.addToRenderList(skybox.mesh);
       }
 
       if (groundTransparent) {
-        this.waterMaterial.material.addToRenderList(ground.mesh)
+        this.waterMaterial.defaultWaterMaterial.material.addToRenderList(ground.mesh)
       }
 
       // Physics engine also works
