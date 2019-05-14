@@ -1,6 +1,7 @@
 import * as BABYLON from 'babylonjs';
-import { DefaultGround, DefaultWater, DrawLine, DefaultSkybox } from './game-utils';
+import { DrawLine } from './game-utils';
 import { SceneInstance } from './SceneInstance';
+import { DefaultWater, DefaultGround, DefaultSkybox } from './Meshes';
 
 export class World {
   private _light: BABYLON.Light;
