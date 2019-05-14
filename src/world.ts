@@ -1,7 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import { DrawLine } from './game-utils';
 import { SceneInstance } from './SceneInstance';
-import { DefaultWater, DefaultGround, DefaultSkybox } from './Meshes';
+import { DefaultWater, DefaultGround, DefaultSkybox, CreateSkybox } from './Meshes';
 
 export class World {
   private _light: BABYLON.Light;
@@ -30,7 +30,7 @@ export class World {
 
       // create the skybox
       if (sky) {
-        const skybox = new DefaultSkybox(this.sceneInstance.scene, "skybox", "./assets/texture/skybox/TropicalSunnyDay");
+        const skybox = new DefaultSkybox(this.sceneInstance.scene);
         this.waterMaterial.defaultWaterMaterial.material.addToRenderList(skybox.mesh);
       }
 

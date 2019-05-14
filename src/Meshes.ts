@@ -34,7 +34,6 @@ export class DefaultGround {
   }
 }
 
-
 /**
  * Creates a watermaterial
  * @param scene
@@ -64,12 +63,25 @@ export class DefaultWater {
 }
 
 /**
+ * Creates a new default skybox
+ * @param scene
+ */
+export class DefaultSkybox {
+
+  public mesh: BABYLON.Mesh;
+
+  constructor (scene: BABYLON.Scene) {
+    this.mesh = new CreateSkybox(scene, "skybox", "./assets/texture/skybox/TropicalSunnyDay").mesh;
+  }
+}
+
+/**
  * Creates a new skybox with the picttures under fileName.
  * @param scene
  * @param name
  * @param fileName
  */
-export class DefaultSkybox {
+export class CreateSkybox {
 
   public mesh: BABYLON.Mesh;
   private material: BABYLON.StandardMaterial;
@@ -88,7 +100,7 @@ export class DefaultSkybox {
         return;
     }
 
-    this.mesh = BABYLON.Mesh.CreateBox(name, 1000.0, scene);
+    this.mesh = BABYLON.Mesh.CreateBox(name, 0.0, scene);
     this.material = new BABYLON.StandardMaterial(name, scene);
     this.material.backFaceCulling = false;
     this.material.reflectionTexture = new BABYLON.CubeTexture("./assets/texture/skybox/TropicalSunnyDay", scene);
@@ -100,8 +112,6 @@ export class DefaultSkybox {
     this.mesh.material = this.material;
   }
 }
-
-
 
  /**
   * Loads a shark model from .obj file and adds it scene.
