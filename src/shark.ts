@@ -1,5 +1,5 @@
 import { AbstractMesh, WaterMaterial } from "babylonjs";
-import { GameUtils, SharkMesh } from "./game-utils";
+import { SharkMesh } from "./game-utils";
 import { SceneInstance } from './SceneInstance';
 import { BehaviorSubject } from 'rxjs';
 

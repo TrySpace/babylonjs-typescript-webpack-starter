@@ -243,10 +243,10 @@ export class MeshFromOBJ {
   getObservableMesh (): Observable<BABYLON.AbstractMesh[]> {
 
     if (!this.fileName) {
-        return Observable.throw("GameUtils.createMeshFromObjFile: parameter fileName is empty");
+        return Observable.throw("MeshFromOBJ: parameter fileName is empty");
     }
     if (!this.scene) {
-        return Observable.throw("GameUtils.createMeshFromObjFile: parameter scene is empty");
+        return Observable.throw("MeshFromOBJ: parameter scene is empty");
     }
 
     this.mesh = Observable.create(observer => {
@@ -282,22 +282,22 @@ export class MeshFromOBJ {
  * @param name
  * @param fileName
  */
-export class Skybox {
+export class DefaultSkybox {
 
   public mesh: BABYLON.Mesh;
   private material: BABYLON.StandardMaterial;
 
   constructor (scene: BABYLON.Scene, name: string, fileName: string) {
     if (!scene) {
-        console.error("GameUtils.createSkyBox: scene is not defined");
+        console.error("DefaultSkybox: scene is not defined");
         return;
     }
     if (!name) {
-        console.error("GameUtils.createSkyBox: name is not defined");
+        console.error("DefaultSkybox: name is not defined");
         return;
     }
     if (!fileName) {
-        console.error("GameUtils.createSkyBox: fileName is not defined");
+        console.error("DefaultSkybox: fileName is not defined");
         return;
     }
 
@@ -326,15 +326,15 @@ export class Skybox {
 
    constructor (scene: BABYLON.Scene, name: string, noiseFile: string) {
      if (!scene) {
-         console.error("GameUtils.createWaterMaterial: scene is not defined");
+         console.error("DefaultWaterMaterial: scene is not defined");
          return;
      }
      if (!name) {
-         console.error("GameUtils.createWaterMaterial: name is not defined");
+         console.error("DefaultWaterMaterial: name is not defined");
          return;
      }
      if (!noiseFile) {
-         console.error("GameUtils.createWaterMaterial: noiseFile is not defined");
+         console.error("DefaultWaterMaterial: noiseFile is not defined");
          return;
      }
 
@@ -352,13 +352,17 @@ export class Skybox {
    }
  }
 
+
+ /**
+  * Loads a shark model from .obj file and adds it scene.
+  * @param scene
+  */
  export class SharkMesh {
 
    mesh: Observable<BABYLON.AbstractMesh>;
 
    private rootMesh: BABYLON.Mesh;
    private sharkMesh: MeshFromOBJ;
-
 
    constructor (scene: BABYLON.Scene) {
      this.rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
@@ -367,7 +371,6 @@ export class Skybox {
      this.rootMesh.rotation.y = -3 * Math.PI / 4;
 
      this.sharkMesh = new MeshFromOBJ("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1));
-
    }
 
    getObservableMesh () {
@@ -380,33 +383,4 @@ export class Skybox {
        })
      );
    }
-
-
  }
-
-export class GameUtils {
-
-    /**
-     * Loads a shark model from .obj file and adds it scene.
-     * @param scene
-     */
-    public static createShark(scene: BABYLON.Scene): Observable<BABYLON.AbstractMesh> {
-        // create a mesh object with loaded from file
-        let rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
-        rootMesh.isVisible = false;
-        rootMesh.position = new BABYLON.Vector3(0, 0.4, 0);
-        rootMesh.rotation.y = -3 * Math.PI / 4;
-
-        const sharkMesh = new MeshFromOBJ("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1));
-
-        return sharkMesh.getObservableMesh().pipe(
-          map(meshes => {
-              meshes.forEach((mesh) => {
-                  mesh.parent = rootMesh;
-              });
-              return rootMesh;
-          })
-      );
-    }
-
-}

@@ -1,4 +1,4 @@
-import { GameUtils, GUITexture, OnOffButton, XYZTextBlock, XYZText } from './game-utils';
+import { GUITexture, OnOffButton, XYZTextBlock, XYZText } from './game-utils';
 import * as GUI from 'babylonjs-gui';
 import { SceneInstance } from './SceneInstance';
 import { BehaviorSubject } from 'rxjs';
