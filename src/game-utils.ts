@@ -352,6 +352,38 @@ export class Skybox {
    }
  }
 
+ export class SharkMesh {
+
+   mesh: Observable<BABYLON.AbstractMesh>;
+
+   private rootMesh: BABYLON.Mesh;
+   private sharkMesh: MeshFromOBJ;
+
+
+   constructor (scene: BABYLON.Scene) {
+     this.rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
+     this.rootMesh.isVisible = false;
+     this.rootMesh.position = new BABYLON.Vector3(0, 0.4, 0);
+     this.rootMesh.rotation.y = -3 * Math.PI / 4;
+
+     this.sharkMesh = new MeshFromOBJ("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1));
+
+   }
+
+   getObservableMesh () {
+     return this.sharkMesh.getObservableMesh().pipe(
+       map(meshes => {
+           meshes.forEach((mesh) => {
+               mesh.parent = this.rootMesh;
+           });
+           return this.rootMesh;
+       })
+     );
+   }
+
+
+ }
+
 export class GameUtils {
 
     /**
@@ -374,7 +406,7 @@ export class GameUtils {
               });
               return rootMesh;
           })
-      );;
+      );
     }
 
 }

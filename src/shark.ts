@@ -1,5 +1,5 @@
-import { AbstractMesh, Engine, WaterMaterial } from "babylonjs";
-import { GameUtils } from "./game-utils";
+import { AbstractMesh, WaterMaterial } from "babylonjs";
+import { GameUtils, SharkMesh } from "./game-utils";
 import { SceneInstance } from './SceneInstance';
 import { BehaviorSubject } from 'rxjs';
 
@@ -20,12 +20,12 @@ export class Shark {
         this.animateShark(deltaTime);
     });
     this._waterMaterial = waterMaterial;
-    this.createShark(sceneInstance);
+    this.createTheShark(sceneInstance);
   }
 
-  createShark (sceneInstance: SceneInstance) {
+  createTheShark (sceneInstance: SceneInstance) {
     // create a shark mesh from an obj file
-    GameUtils.createShark(sceneInstance.scene)
+    new SharkMesh(sceneInstance.scene).getObservableMesh()
         .subscribe(sharkMesh => {
             this._sharkMesh = sharkMesh;
             this._sharkMesh.getChildren().forEach(
