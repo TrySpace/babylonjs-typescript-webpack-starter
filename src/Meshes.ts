@@ -100,7 +100,7 @@ export class CreateSkybox {
         return;
     }
 
-    this.mesh = BABYLON.Mesh.CreateBox(name, 0.0, scene);
+    this.mesh = BABYLON.Mesh.CreateBox(name, 1000.0, scene);
     this.material = new BABYLON.StandardMaterial(name, scene);
     this.material.backFaceCulling = false;
     this.material.reflectionTexture = new BABYLON.CubeTexture("./assets/texture/skybox/TropicalSunnyDay", scene);
