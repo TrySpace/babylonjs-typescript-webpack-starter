@@ -137,8 +137,14 @@ export class DrawLine {
   }
 }
 
+
 export interface XYZText { x: GUI.TextBlock, y: GUI.TextBlock, z: GUI.TextBlock };
 
+/**
+ *
+ * Apply XYZ Text to guiTexture
+ * @param guiTexture
+ */
 export class XYZTextBlock {
 
   text: XYZText;
@@ -149,7 +155,7 @@ export class XYZTextBlock {
       y: new GUI.TextBlock(),
       z: new GUI.TextBlock()
     };
-    
+
     const textHeight = '20px';
     const textWidth = '500px';
     const textLeft = 20;
@@ -204,59 +210,74 @@ export class XYZTextBlock {
   }
 }
 
-export class GameUtils {
 
-    /**
-     *
-     * @param guiTexture
-     */
-    public static createCoordinatesText(guiTexture: GUI.AdvancedDynamicTexture): { txtX: GUI.TextBlock, txtY: GUI.TextBlock, txtZ: GUI.TextBlock } {
-        let txtX = new GUI.TextBlock();
-        txtX.height = "20px";
-        txtX.width = "500px";
-        txtX.fontSize = 20;
-        txtX.text = "X: ";
-        txtX.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        txtX.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        txtX.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        txtX.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        txtX.left = 20;
-        txtX.top = 60;
 
-        let txtY = new GUI.TextBlock();
-        txtY.height = "20px";
-        txtY.width = "500px";
-        txtY.fontSize = 20;
-        txtY.text = "Y: ";
-        txtY.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        txtY.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        txtY.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        txtY.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        txtY.left = 20;
-        txtY.top = 90;
+/**
+ * Returns Observable of mesh array, which are loaded from a file.
+ * After mesh importing all meshes become given scaling, position and rotation.
+ * @param fileName
+ * @param scene
+ * @param scaling
+ * @param position
+ * @param rotationQuaternion
+ */
+export class MeshFromOBJ {
 
-        let txtZ = new GUI.TextBlock();
-        txtZ.height = "20px";
-        txtZ.width = "500px";
-        txtZ.fontSize = 20;
-        txtZ.text = "Z: ";
-        txtZ.textHorizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        txtZ.textVerticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        txtZ.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-        txtZ.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-        txtZ.left = 20;
-        txtZ.top = 120;
+  public mesh: Observable<BABYLON.AbstractMesh[]>
+  private assetsFolder: string;
+  private fileName: string;
+  private scene: BABYLON.Scene;
+  private scaling: BABYLON.Vector3;
+  private position: BABYLON.Vector3;
+  private rotationQuaternion: BABYLON.Quaternion;
 
-        guiTexture.addControl(txtX);
-        guiTexture.addControl(txtY);
-        guiTexture.addControl(txtZ);
+  constructor (folderName: string = "", fileName: string, scene: BABYLON.Scene, scaling: BABYLON.Vector3 = BABYLON.Vector3.One(), position: BABYLON.Vector3 = BABYLON.Vector3.Zero(), rotationQuaternion: BABYLON.Quaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, 0, 0)) {
+    this.fileName = fileName;
+    this.scene = scene;
+    this.scaling = scaling;
+    this.position = position;
+    this.rotationQuaternion = rotationQuaternion;
+    this.assetsFolder = './assets/' + folderName;
+  }
 
-        return {
-            txtX: txtX,
-            txtY: txtY,
-            txtZ: txtZ
-        }
+  getObservableMesh (): Observable<BABYLON.AbstractMesh[]> {
+
+    if (!this.fileName) {
+        return Observable.throw("GameUtils.createMeshFromObjFile: parameter fileName is empty");
     }
+    if (!this.scene) {
+        return Observable.throw("GameUtils.createMeshFromObjFile: parameter scene is empty");
+    }
+
+    this.mesh = Observable.create(observer => {
+      BABYLON.SceneLoader.ImportMesh(
+        null,
+        this.assetsFolder,
+        this.fileName,
+        this.scene,
+        (
+          meshes: BABYLON.AbstractMesh[],
+          particleSystems: BABYLON.ParticleSystem[],
+          skeletons: BABYLON.Skeleton[]
+        ) => {
+          meshes.forEach((mesh) => {
+            mesh.position = this.position;
+            mesh.rotationQuaternion = this.rotationQuaternion;
+            mesh.scaling = this.scaling;
+          });
+          console.log("Imported Mesh: " + this.fileName);
+          observer.next(meshes);
+          observer.complete();
+        });
+    });
+
+    return this.mesh;
+  }
+
+}
+
+
+export class GameUtils {
 
     /**
      * Returns Observable of mesh array, which are loaded from a file.
@@ -379,15 +400,16 @@ export class GameUtils {
         rootMesh.position = new BABYLON.Vector3(0, 0.4, 0);
         rootMesh.rotation.y = -3 * Math.PI / 4;
 
-        return GameUtils.createMeshFromObjFile("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1))
-                .pipe(
-                    map(meshes => {
-                        meshes.forEach((mesh) => {
-                            mesh.parent = rootMesh;
-                        });
-                        return rootMesh;
-                    })
-                );
+        const sharkMesh = new MeshFromOBJ("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1));
+
+        return sharkMesh.getObservableMesh().pipe(
+          map(meshes => {
+              meshes.forEach((mesh) => {
+                  mesh.parent = rootMesh;
+              });
+              return rootMesh;
+          })
+      );;
     }
 
 }
