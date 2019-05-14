@@ -1,4 +1,4 @@
-
+import * as BABYLON from 'babylonjs';
 
 /**
  * Creates a new WaterMaterial Object with a given name. The noiseFile descrips the noise in the water,

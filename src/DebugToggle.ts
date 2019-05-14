@@ -1,23 +1,22 @@
-import { GUITexture, OnOffButton, XYZTextBlock, XYZText } from './game-utils';
+import { GUITexture, OnOffButton, XYZTextBlock, XYZText } from './gui';
 import * as GUI from 'babylonjs-gui';
 import { SceneInstance } from './SceneInstance';
 import { BehaviorSubject } from 'rxjs';
 
 export class DebugToggle {
 
-  // private _shark: Shark;
-  private _txtCoordinates: XYZText = null;
-  private _guiTexture: GUITexture;
+  private txtCoordinates: XYZText = null;
+  private guiTexture: GUITexture;
   private bool: BehaviorSubject<boolean>;
 
   constructor (sceneInstance: SceneInstance, bool: BehaviorSubject<boolean>, boolAction: () => void) {
     this.bool = bool;
 
     // create new gui
-    this._guiTexture = new GUITexture(sceneInstance.scene);
+    this.guiTexture = new GUITexture(sceneInstance.scene);
 
     // Button to start shark animation
-    let onOffButton = new OnOffButton(this._guiTexture.texture, "On");
+    let onOffButton = new OnOffButton(this.guiTexture.texture, "On");
 
     onOffButton.onPointerUp((btn) => {
         let textControl = btn.children[0] as GUI.TextBlock;
@@ -32,7 +31,7 @@ export class DebugToggle {
 
 
       // Debug Text for Shark coordinates
-    this._txtCoordinates = new XYZTextBlock(this._guiTexture.texture).text;
+    this.txtCoordinates = new XYZTextBlock(this.guiTexture.texture).text;
   }
 
   /**
@@ -43,8 +42,8 @@ export class DebugToggle {
       if(!coordinates) {
           return;
       }
-      this._txtCoordinates.x.text = "X: " + coordinates.x;
-      this._txtCoordinates.y.text = "Y: " + coordinates.y;
-      this._txtCoordinates.z.text = "Z: " + coordinates.z;
+      this.txtCoordinates.x.text = "X: " + coordinates.x;
+      this.txtCoordinates.y.text = "Y: " + coordinates.y;
+      this.txtCoordinates.z.text = "Z: " + coordinates.z;
   }
 }

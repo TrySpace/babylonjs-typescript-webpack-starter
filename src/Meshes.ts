@@ -1,9 +1,9 @@
-import { MeshFromOBJ } from "./game-utils";
+import * as BABYLON from 'babylonjs';
 import { Observable } from "rxjs";
-import { DefaultWaterMaterial } from "./Materials";
 import { map } from "rxjs/operators";
+import { MeshFromOBJ } from "./utils";
+import { DefaultWaterMaterial } from "./Materials";
 import { HWSize } from "./common.types";
-
 
 /**
  * Creates a basic ground

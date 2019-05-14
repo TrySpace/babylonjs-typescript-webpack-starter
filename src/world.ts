@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import { DrawLine } from './game-utils';
+import { DrawLine } from './utils';
 import { SceneInstance } from './SceneInstance';
 import { DefaultWater, DefaultGround, DefaultSkybox, CreateSkybox } from './Meshes';
 
