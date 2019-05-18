@@ -5,6 +5,39 @@ import { MeshFromOBJ } from "./utils";
 import { DefaultWaterMaterial } from "./Materials";
 import { HWSize } from "./common.types";
 
+export class SimpleSphere {
+
+  public mesh: BABYLON.Mesh;
+
+  constructor (scene: BABYLON.Scene, diameter: number, diameterX: number) {
+    // Mesh
+    this.mesh = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter, diameterX}, scene);
+  }
+}
+
+
+/**
+ * Creates a basic ground
+ * @param scene
+ * @param size
+ */
+export class DefaultPlane {
+
+  public mesh: BABYLON.Mesh;
+
+  constructor (scene: BABYLON.Scene, size: HWSize, doubleside: boolean) {
+    // Mesh
+    this.mesh = BABYLON.MeshBuilder.CreatePlane("plane", {
+      width: size.width,
+      height: size.height,
+      sideOrientation: doubleside ? BABYLON.Mesh.DOUBLESIDE : 0,
+      updatable: false
+    }, scene);
+
+    this.mesh.position.y = -1;
+  }
+}
+
 /**
  * Creates a basic ground
  * @param scene
@@ -113,34 +146,34 @@ export class CreateSkybox {
   }
 }
 
- /**
-  * Loads a shark model from .obj file and adds it scene.
-  * @param scene
-  */
- export class SharkMesh {
+/**
+* Loads a shark model from .obj file and adds it scene.
+* @param scene
+*/
+export class SharkMesh {
 
-   mesh: Observable<BABYLON.AbstractMesh>;
+  mesh: Observable<BABYLON.AbstractMesh>;
 
-   private rootMesh: BABYLON.Mesh;
-   private sharkMesh: MeshFromOBJ;
+  private rootMesh: BABYLON.Mesh;
+  private sharkMesh: MeshFromOBJ;
 
-   constructor (scene: BABYLON.Scene) {
-     this.rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
-     this.rootMesh.isVisible = false;
-     this.rootMesh.position = new BABYLON.Vector3(0, 0.4, 0);
-     this.rootMesh.rotation.y = -3 * Math.PI / 4;
+  constructor (scene: BABYLON.Scene) {
+    this.rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
+    this.rootMesh.isVisible = false;
+    this.rootMesh.position = new BABYLON.Vector3(0, 0.4, 0);
+    this.rootMesh.rotation.y = -3 * Math.PI / 4;
 
-     this.sharkMesh = new MeshFromOBJ("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1));
-   }
+    this.sharkMesh = new MeshFromOBJ("mesh/", "mesh.obj", scene, new BABYLON.Vector3(1, 1, 1));
+  }
 
-   getObservableMesh () {
-     return this.sharkMesh.getObservableMesh().pipe(
-       map(meshes => {
-           meshes.forEach((mesh) => {
-               mesh.parent = this.rootMesh;
-           });
-           return this.rootMesh;
-       })
-     );
-   }
- }
+  getObservableMesh () {
+    return this.sharkMesh.getObservableMesh().pipe(
+     map(meshes => {
+         meshes.forEach((mesh) => {
+             mesh.parent = this.rootMesh;
+         });
+         return this.rootMesh;
+     })
+    );
+  }
+}

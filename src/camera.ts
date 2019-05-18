@@ -2,8 +2,8 @@ import * as BABYLON from 'babylonjs';
 import { SceneInstance } from './SceneInstance';
 
 export class Camera {
-  private camera: BABYLON.ArcRotateCamera;
-  public sceneInstance: SceneInstance;
+  private sceneInstance: SceneInstance;
+  public camera: BABYLON.ArcRotateCamera;  
 
   constructor(sceneInstance: SceneInstance, nr: number) {
     this.sceneInstance = sceneInstance;

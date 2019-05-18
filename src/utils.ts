@@ -1,5 +1,19 @@
 import * as BABYLON from 'babylonjs';
 import { Observable } from 'rxjs';
+import { SimpleSphere } from './Meshes';
+
+
+export class Light {
+
+  public light: BABYLON.HemisphericLight;
+  private mesh: BABYLON.Mesh;
+
+  constructor (scene: BABYLON.Scene, position: BABYLON.Vector3, show?: boolean) {
+    this.light = new BABYLON.HemisphericLight('light', position, scene);
+    this.mesh = new SimpleSphere(scene, 1, 1).mesh;
+    this.mesh.setPositionWithLocalVector(position);
+  }
+}
 
 
 /**
