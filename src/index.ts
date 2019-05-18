@@ -85,19 +85,15 @@ class classThree {
       width: 10
     }, true);
 
+    // var axis = new BABYLON.Vector3(1, 1, 1);
+    // var angle = Math.PI / 8;
+    // var quaternion = BABYLON.Quaternion.RotationAxis(axis, angle);
+    // plane.mesh.rotationQuaternion = quaternion;
+
+    plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, 2, 0);
+
     let lightPosition = new BABYLON.Vector3(0, 5, -5);
     let light = new Light(renderScene.scene, lightPosition);
-
-    // Fill world
-    // let world = new World(renderScene, groundTransparent, sky);
-
-    // Add Objects
-    // let object = new Shark(renderScene, world.waterMaterial.defaultWaterMaterial.material);
-    //
-    // // Gui
-    // let gui = new DebugToggle(renderScene, object.swimming, () => {
-    //   object.swimming.next(!object.swimming.getValue());
-    // });
 
     // Render bottom
     new RenderLoop(renderScene, () => {
