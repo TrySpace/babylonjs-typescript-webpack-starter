@@ -85,14 +85,9 @@ class classThree {
       width: 10
     }, true);
 
-    // var axis = new BABYLON.Vector3(1, 1, 1);
-    // var angle = Math.PI / 8;
-    // var quaternion = BABYLON.Quaternion.RotationAxis(axis, angle);
-    // plane.mesh.rotationQuaternion = quaternion;
+    plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, (90 * Math.PI) / 180, 0);
 
-    plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, 2, 0);
-
-    let lightPosition = new BABYLON.Vector3(0, 5, -5);
+    let lightPosition = new BABYLON.Vector3(0, 5, 0);
     let light = new Light(renderScene.scene, lightPosition);
 
     // Render bottom
