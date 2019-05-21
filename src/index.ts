@@ -47,7 +47,6 @@ class classOne {
   }
 }
 
-
 class classTwo {
   constructor (canvasId, groundTransparent = true, sky = true) {
     let renderCanvas = new RenderCanvas(canvasId);
@@ -103,13 +102,13 @@ class classFour {
     new Camera(renderScene, 3);
 
     let plane = new DefaultPlane(renderScene.scene, {
-      height: 10,
-      width: 10
+      height: 30,
+      width: 30
     }, true);
 
     plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, (90 * Math.PI) / 180, 0);
 
-    let lightPosition = new BABYLON.Vector3(0, 5, 0);
+    let lightPosition = new BABYLON.Vector3(15, 10, 15);
     new Light(renderScene.scene, lightPosition);
 
     // Render bottom
