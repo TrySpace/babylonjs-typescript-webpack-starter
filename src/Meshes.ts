@@ -199,7 +199,7 @@ export class MarsMesh {
     this.material = new BABYLON.StandardMaterial('mars', scene);
     this.material.diffuseTexture = new BABYLON.Texture("./assets/mesh/Mars/Diffuse.png", scene)
     this.material.diffuseTexture.coordinatesMode = BABYLON.Texture.EQUIRECTANGULAR_MODE;
-    this.material.diffuseTexture.hasAlpha = true;
+    // this.material.diffuseTexture.hasAlpha = true;
 
 
     this.sharkMesh = new MeshFromOBJ("mesh/", "Mars.obj", scene, new BABYLON.Vector3(1, 1, 1));
