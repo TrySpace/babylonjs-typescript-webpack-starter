@@ -177,3 +177,43 @@ export class SharkMesh {
     );
   }
 }
+
+/**
+* Loads a shark model from .obj file and adds it scene.
+* @param scene
+*/
+export class MarsMesh {
+
+  mesh: Observable<BABYLON.AbstractMesh>;
+
+  private rootMesh: BABYLON.Mesh;
+  private sharkMesh: MeshFromOBJ;
+  private material: BABYLON.StandardMaterial;
+
+  constructor (scene: BABYLON.Scene) {
+    this.rootMesh = BABYLON.MeshBuilder.CreateBox("rootMesh", {size: 1}, scene);
+    this.rootMesh.isVisible = false;
+    this.rootMesh.position = new BABYLON.Vector3(0, 0, 0);
+    // this.rootMesh.rotation.y = -3 * Math.PI / 4;
+
+    this.material = new BABYLON.StandardMaterial('mars', scene);
+    this.material.diffuseTexture = new BABYLON.Texture("./assets/mesh/Mars/Diffuse.png", scene)
+    this.material.diffuseTexture.coordinatesMode = BABYLON.Texture.EQUIRECTANGULAR_MODE;
+    this.material.diffuseTexture.hasAlpha = true;
+
+
+    this.sharkMesh = new MeshFromOBJ("mesh/", "Mars.obj", scene, new BABYLON.Vector3(1, 1, 1));
+  }
+
+  getObservableMesh () {
+    return this.sharkMesh.getObservableMesh().pipe(
+     map(meshes => {
+         meshes.forEach((mesh) => {
+             mesh.parent = this.rootMesh;
+             mesh.material = this.material;
+         });
+         return this.rootMesh;
+     })
+    );
+  }
+}

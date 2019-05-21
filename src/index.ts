@@ -5,12 +5,13 @@ import { RenderCanvas } from './RenderCanvas';
 import { SceneInstance } from './SceneInstance';
 import { Camera } from './Camera';
 import { Game } from './Game';
-import { World } from './World';
+import { World, World2 } from './World';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './Shark';
 import { DebugToggle } from './DebugToggle';
 import { DefaultPlane } from './Meshes';
 import { Light } from './utils';
+import { Mars } from './Mars';
 
 window.addEventListener('DOMContentLoaded', () => {
   // Set global variable for cannonjs physics engine
@@ -18,7 +19,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Top
   new classOne('renderCanvas');
-  new classTwo('renderCanvas2');
+  new classTwo('renderCanvas2', false, true);
 
 
   // Bottom
@@ -48,16 +49,16 @@ class classOne {
 }
 
 class classTwo {
-  constructor (canvasId, groundTransparent = true, sky = true) {
+  constructor (canvasId: string, groundTransparent = true, sky = true) {
     let renderCanvas = new RenderCanvas(canvasId);
     let renderScene = new SceneInstance(renderCanvas);
     new Camera(renderScene, 3);
 
     // Fill world
-    let world = new World(renderScene, groundTransparent, sky);
+    let world = new World2(renderScene, groundTransparent, sky);
 
     // Add Objects
-    let object = new Shark(renderScene, world.waterMaterial.defaultWaterMaterial.material);
+    let object = new Mars(renderScene);
 
     // Gui
     let gui = new DebugToggle(renderScene, object.swimming, () => {

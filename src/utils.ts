@@ -92,6 +92,7 @@ export class MeshFromOBJ {
             mesh.scaling = this.scaling;
           });
           console.log("Imported Mesh: " + this.fileName);
+          console.log(this.mesh);
           observer.next(meshes);
           observer.complete();
         });
