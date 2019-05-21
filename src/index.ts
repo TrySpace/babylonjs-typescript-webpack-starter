@@ -9,7 +9,7 @@ import { World } from './World';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './Shark';
 import { DebugToggle } from './DebugToggle';
-import { DefaultPlane, SimpleSphere } from './Meshes';
+import { DefaultPlane } from './Meshes';
 import { Light } from './utils';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -18,12 +18,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Top
   new classOne('renderCanvas');
-  new classOne('renderCanvas2');
+  new classTwo('renderCanvas2');
 
 
   // Bottom
-  new classTwo('renderCanvas3');
-  new classThree('renderCanvas4');
+  new classThree('renderCanvas3');
+  new classFour('renderCanvas4');
 });
 
 
@@ -74,7 +74,7 @@ class classTwo {
 
 
 class classThree {
-  constructor (canvasId, groundTransparent = true, sky = true) {
+  constructor (canvasId: string) {
     let renderCanvas = new RenderCanvas(canvasId);
     let renderScene = new SceneInstance(renderCanvas);
 
@@ -88,11 +88,31 @@ class classThree {
     plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, (90 * Math.PI) / 180, 0);
 
     let lightPosition = new BABYLON.Vector3(0, 5, 0);
-    let light = new Light(renderScene.scene, lightPosition);
+    new Light(renderScene.scene, lightPosition);
 
     // Render bottom
-    new RenderLoop(renderScene, () => {
-      // gui.updateCoordinateTexture(object.firstVertex);
-    });
+    new RenderLoop(renderScene);
+  }
+}
+
+class classFour {
+  constructor (canvasId: string) {
+    let renderCanvas = new RenderCanvas(canvasId);
+    let renderScene = new SceneInstance(renderCanvas);
+
+    new Camera(renderScene, 3);
+
+    let plane = new DefaultPlane(renderScene.scene, {
+      height: 10,
+      width: 10
+    }, true);
+
+    plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, (90 * Math.PI) / 180, 0);
+
+    let lightPosition = new BABYLON.Vector3(0, 5, 0);
+    new Light(renderScene.scene, lightPosition);
+
+    // Render bottom
+    new RenderLoop(renderScene);
   }
 }
