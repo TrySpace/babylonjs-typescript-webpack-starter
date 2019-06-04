@@ -5,6 +5,54 @@ import { MeshFromOBJ } from "./utils";
 import { DefaultWaterMaterial } from "./Materials";
 import { HWSize } from "./common.types";
 
+
+export class Box {
+
+  public mesh: BABYLON.Mesh;
+
+  constructor (scene: BABYLON.Scene) {
+    this.mesh = BABYLON.MeshBuilder.CreateBox("box", {
+      height: 1,
+      updatable: false
+    }, scene);
+  }
+}
+
+
+export class BoxGrid {
+
+  constructor (scene: BABYLON.Scene, size: HWSize, spacing: number = 0) {
+    let x = size.height;
+    let y = size.width;
+    let xpos = 0;
+    let ypos = 0;
+    // let spacing = 0.5;
+
+    // ypos = 0;
+    for (let yit = 0; yit < y; yit++) {
+      xpos = 0;
+      ypos = 1 + ypos + spacing;
+      for (let xit = 0; xit < x; xit++) {
+        xpos = 1 + xpos + spacing;
+
+        // Position obj
+        let pos = new BABYLON.Vector3(xpos, 1, ypos);
+        let obj = new Box(scene);
+        obj.mesh.setPositionWithLocalVector(pos);
+
+        // Mat
+        let mat = new BABYLON.StandardMaterial('mat', scene);
+        mat.diffuseColor = new BABYLON.Color3(xit / 10, 0, yit / 10);
+        // mat.diffuseTexture.hasAlpha = true;
+        mat.backFaceCulling = true;
+        mat.wireframe = true;
+        obj.mesh.material = mat;
+      }
+    }
+
+  }
+}
+
 export class SimpleSphere {
 
   public mesh: BABYLON.Mesh;

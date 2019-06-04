@@ -9,7 +9,7 @@ import { World, World2 } from './World';
 import { RenderLoop } from './RenderLoop';
 import { Shark } from './Shark';
 import { DebugToggle } from './DebugToggle';
-import { DefaultPlane } from './Meshes';
+import { DefaultPlane, Box, BoxGrid } from './Meshes';
 import { Light } from './utils';
 import { Mars } from './Mars';
 
@@ -58,17 +58,13 @@ class classTwo {
     let world = new World2(renderScene, groundTransparent, sky);
 
     // Add Objects
-    let object = new Mars(renderScene);
+    // let object = new Mars(renderScene);
 
-    // Gui
-    let gui = new DebugToggle(renderScene, object.swimming, () => {
-      object.swimming.next(!object.swimming.getValue());
-    });
+    let obj = new BoxGrid(renderScene.scene, {height: 40, width: 40}, 0.1);
 
-    // Render bottom
-    new RenderLoop(renderScene, () => {
-      gui.updateCoordinateTexture(object.firstVertex);
-    });
+
+   // Render bottom
+    new RenderLoop(renderScene, () => { });
   }
 }
 

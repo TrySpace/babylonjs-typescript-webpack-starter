@@ -89,7 +89,7 @@ export class World2 {
       this.sceneInstance.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
 
       // Line
-      new DrawLine(this.sceneInstance.scene, new BABYLON.Vector2(0, 0), 2, -1);
+      // new DrawLine(this.sceneInstance.scene, new BABYLON.Vector2(0, 0), 2, -1);
 
   }
 
