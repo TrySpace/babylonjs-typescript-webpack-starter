@@ -10,9 +10,11 @@ export class Box {
 
   public mesh: BABYLON.Mesh;
 
-  constructor (scene: BABYLON.Scene) {
+  constructor (scene?: BABYLON.Scene, size: HWSize = { height: 1, width: 1, depth: 1 }) {
     this.mesh = BABYLON.MeshBuilder.CreateBox("box", {
-      height: 1,
+      height: size.height,
+      width: size.width,
+      depth: size.depth,
       updatable: false
     }, scene);
   }
@@ -22,6 +24,7 @@ export class Box {
 export class BoxGrid {
 
   constructor (scene: BABYLON.Scene, size: HWSize, spacing: number = 0) {
+    let boxMesh = new Box(scene, {height: 0.9, width: 0.9, depth: 0.9});
     let x = size.height;
     let y = size.width;
     let xpos = 0;
@@ -30,23 +33,26 @@ export class BoxGrid {
 
     // ypos = 0;
     for (let yit = 0; yit < y; yit++) {
-      xpos = 0;
-      ypos = 1 + ypos + spacing;
+      // xpos = 0;
+      // ypos = 1 + ypos + spacing;
       for (let xit = 0; xit < x; xit++) {
-        xpos = 1 + xpos + spacing;
+        // xpos = 1 + xpos + spacing;
 
         // Position obj
-        let pos = new BABYLON.Vector3(xpos, 1, ypos);
-        let obj = new Box(scene);
-        obj.mesh.setPositionWithLocalVector(pos);
+        // let pos = new BABYLON.Vector3(xpos, 0, ypos);
+        // let obj = new Box(scene);
+        let obj = boxMesh.mesh.createInstance('boxInst'+xpos+ypos)
+        // obj.setPositionWithLocalVector(pos);
+        obj.position.x = (x/2)*-1+xit;
+        obj.position.z = (y/2)*-1+yit;
 
         // Mat
-        let mat = new BABYLON.StandardMaterial('mat', scene);
-        mat.diffuseColor = new BABYLON.Color3(xit / 10, 0, yit / 10);
-        // mat.diffuseTexture.hasAlpha = true;
-        mat.backFaceCulling = true;
-        mat.wireframe = true;
-        obj.mesh.material = mat;
+        // let mat = new BABYLON.StandardMaterial('mat', scene);
+        // mat.diffuseColor = new BABYLON.Color3(xit / 10, 0, yit / 10);
+        // // mat.diffuseTexture.hasAlpha = true;
+        // mat.backFaceCulling = true;
+        // mat.wireframe = true;
+        // obj.material = mat;
       }
     }
 

@@ -60,7 +60,7 @@ class classTwo {
     // Add Objects
     // let object = new Mars(renderScene);
 
-    let obj = new BoxGrid(renderScene.scene, {height: 40, width: 40}, 0.1);
+    let obj = new BoxGrid(renderScene.scene, {height: 100, width: 100}, 0.1);
 
 
    // Render bottom
