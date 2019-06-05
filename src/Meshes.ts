@@ -25,34 +25,33 @@ export class BoxGrid {
 
   constructor (scene: BABYLON.Scene, size: HWSize, spacing: number = 0) {
     let boxMesh = new Box(scene, {height: 0.9, width: 0.9, depth: 0.9});
+
+    // Mat
+    let mat = new BABYLON.StandardMaterial('mat', scene);
+    mat.diffuseColor = new BABYLON.Color3(1 / 10, 0, 1 / 10);
+    // mat.diffuseTexture.hasAlpha = true;
+    mat.backFaceCulling = true;
+    // mat.wireframe = true;
+    boxMesh.mesh.material = mat;
+
+    // Set dimensions
     let x = size.height;
     let y = size.width;
-    let xpos = 0;
-    let ypos = 0;
-    // let spacing = 0.5;
 
-    // ypos = 0;
     for (let yit = 0; yit < y; yit++) {
-      // xpos = 0;
-      // ypos = 1 + ypos + spacing;
+
       for (let xit = 0; xit < x; xit++) {
-        // xpos = 1 + xpos + spacing;
-
         // Position obj
-        // let pos = new BABYLON.Vector3(xpos, 0, ypos);
-        // let obj = new Box(scene);
-        let obj = boxMesh.mesh.createInstance('boxInst'+xpos+ypos)
-        // obj.setPositionWithLocalVector(pos);
-        obj.position.x = (x/2)*-1+xit;
-        obj.position.z = (y/2)*-1+yit;
+        let obj = boxMesh.mesh.createInstance('boxInst'+xit+yit)
 
-        // Mat
-        // let mat = new BABYLON.StandardMaterial('mat', scene);
-        // mat.diffuseColor = new BABYLON.Color3(xit / 10, 0, yit / 10);
-        // // mat.diffuseTexture.hasAlpha = true;
-        // mat.backFaceCulling = true;
-        // mat.wireframe = true;
-        // obj.material = mat;
+        // console.log((x/2)*-1+xit);
+        // obj.position.x = (x/2)*-1+xit;
+        // obj.position.z = (y/2)*-1+yit;
+
+        let pos = new BABYLON.Vector3( (x/2)*-1+xit, 0,  (y/2)*-1+yit);
+        obj.setPositionWithLocalVector(pos);
+
+
       }
     }
 
