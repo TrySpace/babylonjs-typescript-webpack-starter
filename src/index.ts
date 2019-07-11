@@ -67,6 +67,8 @@ class classTwo {
 
     let obj = new BoxGrid(renderScene.scene, {height: 100, width: 100}, 0.1);
 
+    let lightPosition = new BABYLON.Vector3(15, 10, 15);
+    new Light(renderScene.scene, lightPosition);
 
    // Render bottom
     new RenderLoop(renderScene, () => { });
