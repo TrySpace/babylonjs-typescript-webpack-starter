@@ -3,7 +3,7 @@ import 'babylonjs-loaders';
 import CANNON = require('cannon');
 import { RenderCanvas } from './RenderCanvas';
 import { SceneInstance } from './SceneInstance';
-import { Camera } from './Camera';
+import { Camera, UniversalCamera } from './Camera';
 import { Game } from './Game';
 import { World, World2 } from './World';
 import { RenderLoop } from './RenderLoop';
@@ -52,7 +52,9 @@ class classTwo {
   constructor (canvasId: string, groundTransparent = true, sky = true) {
     let renderCanvas = new RenderCanvas(canvasId);
     let renderScene = new SceneInstance(renderCanvas);
-    new Camera(renderScene, 3);
+
+    let camera = new UniversalCamera(renderScene, renderCanvas.canvas);
+    camera.camera.applyGravity = true;
 
     // Fill world
     let world = new World2(renderScene, groundTransparent, sky);

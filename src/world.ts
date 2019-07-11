@@ -39,7 +39,8 @@ export class World {
       }
 
       // Physics engine also works
-      let gravity = new BABYLON.Vector3(0, -0.9, 0);
+      let gravity = new BABYLON.Vector3(0, -9.81, 0);
+      this.sceneInstance.scene.gravity = gravity;
       this.sceneInstance.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
 
       // Line
@@ -85,7 +86,8 @@ export class World2 {
       // }
 
       // Physics engine also works
-      let gravity = new BABYLON.Vector3(0, -0.9, 0);
+      let gravity = new BABYLON.Vector3(0, -9.81, 0);
+      this.sceneInstance.scene.gravity = gravity;
       this.sceneInstance.scene.enablePhysics(gravity, new BABYLON.CannonJSPlugin());
 
       // Line

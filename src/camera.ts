@@ -3,11 +3,26 @@ import { SceneInstance } from './SceneInstance';
 
 export class Camera {
   private sceneInstance: SceneInstance;
-  public camera: BABYLON.ArcRotateCamera;  
+  public camera: BABYLON.ArcRotateCamera;
 
   constructor(sceneInstance: SceneInstance, nr: number) {
     this.sceneInstance = sceneInstance;
     this.camera = new BABYLON.ArcRotateCamera(`Camera-${nr}`, 3 * Math.PI / 2, Math.PI / 2.5, 30, BABYLON.Vector3.Zero(), this.sceneInstance.scene);
+
     this.camera.attachControl(this.sceneInstance.renderCanvas.canvas, true);
+  }
+}
+
+export class UniversalCamera {
+  private sceneInstance: SceneInstance;
+  public camera: BABYLON.UniversalCamera;
+
+  constructor(sceneInstance: SceneInstance, canvas: HTMLCanvasElement) {
+    this.sceneInstance = sceneInstance;
+
+    this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), this.sceneInstance.scene);
+    this.camera.setTarget(BABYLON.Vector3.Zero());
+
+    this.camera.attachControl(canvas)
   }
 }
