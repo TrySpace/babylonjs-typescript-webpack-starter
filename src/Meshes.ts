@@ -33,6 +33,7 @@ export class BoxGrid {
     mat.backFaceCulling = true;
     // mat.wireframe = true;
     boxMesh.mesh.material = mat;
+    // boxMesh.mesh.checkCollisions = true;
 
     // Set dimensions
     let x = size.height;
@@ -50,6 +51,7 @@ export class BoxGrid {
 
         let pos = new BABYLON.Vector3( (x/2)*-1+xit, 0,  (y/2)*-1+yit);
         obj.setPositionWithLocalVector(pos);
+        obj.checkCollisions = true;
 
 
       }

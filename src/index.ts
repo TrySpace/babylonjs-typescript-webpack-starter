@@ -52,9 +52,12 @@ class classTwo {
   constructor (canvasId: string, groundTransparent = true, sky = true) {
     let renderCanvas = new RenderCanvas(canvasId);
     let renderScene = new SceneInstance(renderCanvas);
+    renderScene.scene.collisionsEnabled = true;
 
     let camera = new UniversalCamera(renderScene, renderCanvas.canvas);
     camera.camera.applyGravity = true;
+    camera.camera.ellipsoid = new BABYLON.Vector3(1, 1, 1); // finalPosition = position - vec3(0, ellipsoid.y, 0) + ellipsoidOffset
+    camera.camera.checkCollisions = true;
 
     // Fill world
     let world = new World2(renderScene, groundTransparent, sky);
@@ -97,13 +100,19 @@ class classFour {
   constructor (canvasId: string) {
     let renderCanvas = new RenderCanvas(canvasId);
     let renderScene = new SceneInstance(renderCanvas);
+    renderScene.scene.collisionsEnabled = true;
 
-    new Camera(renderScene, 3);
+    // new Camera(renderScene, 3);
+    let camera = new UniversalCamera(renderScene, renderCanvas.canvas);
+    camera.camera.applyGravity = true;
+    camera.camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+    camera.camera.checkCollisions = true;
 
     let plane = new DefaultPlane(renderScene.scene, {
-      height: 30,
-      width: 30
+      height: 280,
+      width: 280
     }, true);
+    plane.mesh.checkCollisions = true;
 
     plane.mesh.rotationQuaternion = BABYLON.Quaternion.RotationYawPitchRoll(0, (90 * Math.PI) / 180, 0);
 
