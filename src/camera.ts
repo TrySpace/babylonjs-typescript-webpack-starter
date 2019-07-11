@@ -20,8 +20,8 @@ export class UniversalCamera {
   constructor(sceneInstance: SceneInstance, canvas: HTMLCanvasElement) {
     this.sceneInstance = sceneInstance;
 
-    this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(2, 5, 6), this.sceneInstance.scene);
-    this.camera.setTarget(BABYLON.Vector3.Zero());
+    this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(1, 2, 1), this.sceneInstance.scene);
+    this.camera.setTarget(new BABYLON.Vector3(2, 2, 2));
 
     this.camera.attachControl(canvas)
   }
