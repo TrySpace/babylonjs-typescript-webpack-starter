@@ -23,6 +23,11 @@ export class UniversalCamera {
     this.camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(1, 2, 1), this.sceneInstance.scene);
     this.camera.setTarget(new BABYLON.Vector3(2, 2, 2));
 
+    this.camera.keysUp = [87];
+    this.camera.keysDown = [83];
+    this.camera.keysLeft = [65];
+    this.camera.keysRight = [68];
+
     this.camera.attachControl(canvas)
   }
 }
